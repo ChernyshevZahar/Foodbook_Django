@@ -4,10 +4,10 @@ from .models import CatigoryRecipe, Recipe, Products
 
 
 class CatigoryRecipeInLine(admin.TabularInline):
-    model = CatigoryRecipe.orders.through
+    model = Recipe.catigory_recipe.through
 
 class ProductsInLine(admin.TabularInline):
-    model = Products.orders.through
+    model = Recipe.products.through
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     inlines = [
