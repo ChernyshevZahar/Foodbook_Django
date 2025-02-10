@@ -26,3 +26,5 @@ class Recipe(models.Model):
     cooking_steps = models.TextField(null=False,blank=True)
     cooking_time = models.PositiveSmallIntegerField(default=0)
     image_dish  = models.ImageField(null=True, blank=True, upload_to=image_path_name)
+    catigory_recipe = models.ManyToManyField(CatigoryRecipe, related_name='catigory_recipe')
+    products = models.ManyToManyField(Products, related_name='products')
