@@ -13,3 +13,9 @@ class CatigoryRecipe(models.Model):
     name = models.CharField(max_length=50,blank=True)
     def __str__(self):
         return f"{self.name}"
+
+class Recipe(models.Model):
+    name = models.CharField(max_length=30,blank=True)
+    discription  = models.TextField(null=False,blank=True)
+    cooking_steps = models.TextField(null=False,blank=True)
+    cooking_time = models.PositiveSmallIntegerField(default=0)
