@@ -14,7 +14,16 @@ class RecipeAdmin(admin.ModelAdmin):
         CatigoryRecipeInLine,
         ProductsInLine,
     ]
-    list_display = ["name","discription","cooking_steps","cooking_time","image_dish"]
+    list_display = ["name","discription","cooking_time","image_dish"]
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ["name","discription","cooking_time","cooking_steps","image_dish"]
+            },
+
+        ),
+    ]
 
 @admin.register(CatigoryRecipe)
 class CatigoryRecipeAdmin(admin.ModelAdmin):
