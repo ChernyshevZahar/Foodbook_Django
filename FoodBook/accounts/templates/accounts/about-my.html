@@ -16,6 +16,6 @@
         <p>email: {{user.email}}</p>
         <p>Bio: {{user.profile.bio}}</p>
 
-        <h1>Defalt</h1>
+        <a href="{%url 'accounts:about_me_update'%}">Обновить профиль</a>
     {%endif%}
 {% endblock %}
