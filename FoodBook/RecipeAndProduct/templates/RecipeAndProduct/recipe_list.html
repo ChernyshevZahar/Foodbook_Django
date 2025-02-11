@@ -28,12 +28,18 @@
                     <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=recept.pk%}">Подробнее</a>
                     
                 </div>
+
             {% endfor %}
+             <div>
+                  <a href="{% url 'RecipeAndProduct:recipt-add'%}">Добавить новый рецепт</a>
+             </div>
         
         {%else%}
         
             <h2>Рецепты ещё не добавлены</h2>
-        
+            <div>
+              <a href="{% url 'RecipeAndProduct:recipt-add' pk=recept.pk%}">Добавить новый рецепт</a>
+            </div>
         {%endif%}
     </section>
     
