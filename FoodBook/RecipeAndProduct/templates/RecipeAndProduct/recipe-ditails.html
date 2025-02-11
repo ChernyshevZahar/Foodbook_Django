@@ -1,0 +1,28 @@
+{% extends 'RecipeAndProduct/base_R&P.html'%}
+
+{% block title%}
+    <title>Подробный рецепт</title>
+{% endblock%}
+
+{% block body %}
+    {% if recept %}
+        <div>
+            <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+            <h1>Рецепт: {{recept.name}}</h1>
+            <h2>Описание: {{recept.discription}}</h2>
+            <p>Время приготовления: {{recept.cooking_time}}</p>
+            <div>
+              <h3>Необходимые продукты</h3>
+                {% for prod in recept.products.all %}
+                  <p>{{prod.name}}</p>
+                {%endfor%}
+            </div>
+            <h2>Способ приготовления</h2>
+            <p>
+              {{recept.cooking_steps}}
+            </p>
+
+        </div>
+
+    {%endif%}
+{% endblock%}

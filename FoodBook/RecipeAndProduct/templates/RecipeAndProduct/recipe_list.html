@@ -24,6 +24,8 @@
                             <p>{{ cat.name }}</p>
                         {%endfor%}
                     </div>
+
+                    <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=recept.pk%}">Подробнее</a>
                     
                 </div>
             {% endfor %}
