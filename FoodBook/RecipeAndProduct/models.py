@@ -28,3 +28,6 @@ class Recipe(models.Model):
     image_dish  = models.ImageField(null=True, blank=True, upload_to=image_path_name)
     catigory_recipe = models.ManyToManyField(CatigoryRecipe, related_name='catigory_recipe')
     products = models.ManyToManyField(Products, related_name='products')
+
+    def __str__(self):
+        return f"{self.name}"
