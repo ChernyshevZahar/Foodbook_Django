@@ -1,0 +1,14 @@
+{% extends 'RecipeAndProduct/base_R&P.html'%}
+
+{%block title%}
+    <title>Регистрация</title>
+{% endblock %}
+
+{%block body%}
+    <h1>Укажите ваши данные:</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Зарегестрирвоаться">
+    </form>
+{% endblock %}

@@ -16,8 +16,20 @@
                 <a href="">Мои рецепты</a>
             </li>
             <li>
-                <a href="">Профиль</a>
+                <a href="{% url 'accounts:about_me'%}">Профиль</a>
             </li>
+            {%if user.is_authenticated %}
+             <form method="post" action="{% url 'accounts:Logout_app' %}">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+             </form>
+            {% else %}
+            <div>
+                 <a href="{% url 'accounts:login_app' %}">Авторизация</a>
+                <a href="{% url 'accounts:register' %}">Регистрация</a>
+            </div>
+
+            {%endif %}
         </ul>
     </nav>
 

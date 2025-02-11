@@ -1,0 +1,21 @@
+{% extends 'RecipeAndProduct/base_R&P.html'%}
+
+{%block title%}
+    <title>Профиль</title>
+{% endblock %}
+
+{%block body%}
+    <h1>Данные:</h1>
+     {% if user.is_authenticated %}
+        {% if  user.profile.avatar %}
+            <img src="{{user.profile.avatar.url}}" alt="{{user.username}}">
+        {%endif%}
+        <p>UserName: {{user.username}}</p>
+        <p>first_name: {{user.first_name}}</p>
+        <p>first_name: {{user.last_name}}</p>
+        <p>email: {{user.email}}</p>
+        <p>Bio: {{user.profile.bio}}</p>
+
+        <h1>Defalt</h1>
+    {%endif%}
+{% endblock %}
