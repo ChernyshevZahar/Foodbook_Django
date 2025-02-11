@@ -25,6 +25,7 @@
 
                             <p>{{ cat.name }}</p>
                         {%endfor%}
+                        <p>Создатель: {{recept.user}} </p>
                     </div>
 
                     <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=recept.pk%}">Подробнее</a>

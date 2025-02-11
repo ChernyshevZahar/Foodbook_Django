@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 def image_path_name(instens:'Recipe', filename:str) -> str:
@@ -28,6 +29,7 @@ class Recipe(models.Model):
     image_dish  = models.ImageField(null=True, blank=True, upload_to=image_path_name)
     catigory_recipe = models.ManyToManyField(CatigoryRecipe, related_name='catigory_recipe')
     products = models.ManyToManyField(Products, related_name='products')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"{self.name}"

@@ -5,4 +5,4 @@ from  .models import Recipe
 class AddingRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = "__all__"
+        exclude = ('user',)

@@ -29,7 +29,9 @@ class CreateRecipteView(CreateView):
     form_class = AddingRecipeForm
     success_url = reverse_lazy('RecipeAndProduct:recipt-list')
     def form_valid(self, form):
+        user = self.request.user
         recipte = form.save(commit=False)
+        recipte.user = user
         recipte.save()
         return super().form_valid(form)
 
