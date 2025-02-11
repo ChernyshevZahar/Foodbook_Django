@@ -1,0 +1,39 @@
+{%extends 'RecipeAndProduct/base_R&P.html'%}
+
+
+{% block title%}
+    <title>
+        Список рецептов
+    </title>
+{% endblock %}
+
+
+{% block body %}
+    <section>
+        {% if listrecipte %}
+        
+            {% for recept in listrecipte %}
+                <div>
+                    <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+                    <div>
+                        <h1>{{recept.name}}</h1>
+                        <p>Время приготовления: {{recept.cooking_time}} минут</p>
+                         <h3>Категории:</h3>
+                        {%for cat in recept.catigory_recipe.all%}
+
+                            <p>{{ cat.name }}</p>
+                        {%endfor%}
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        
+        {%else%}
+        
+            <h2>Рецепты ещё не добавлены</h2>
+        
+        {%endif%}
+    </section>
+    
+
+{% endblock %}
