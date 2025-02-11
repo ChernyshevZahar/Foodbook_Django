@@ -8,9 +8,9 @@
     <form  method="post" enctype="multipart/form-data">
         {%csrf_token%}
         {{form.as_p}}
-        <button type="submit">Создать</button>
+        <button type="submit">Обновить</button>
     </form>
     <div>
-        <a href="{% url 'RecipeAndProduct:recipt-list' %}">Вернуться к списку рецептов</a>
+        <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}">Вернуться к  рецепту</a>
     </div>
 {% endblock%}

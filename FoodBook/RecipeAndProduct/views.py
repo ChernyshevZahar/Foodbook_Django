@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView , DetailView , CreateView
+from django.views.generic import ListView , DetailView , CreateView,UpdateView,DeleteView
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 
 from .models import Recipe
 from .forms import AddingRecipeForm
@@ -32,3 +32,19 @@ class CreateRecipteView(CreateView):
         recipte = form.save(commit=False)
         recipte.save()
         return super().form_valid(form)
+
+class UpdateRecipteView(UpdateView):
+    template_name = "RecipeAndProduct/recipe-update.html"
+    model = Recipe
+    fields = ['discription','image_dish','catigory_recipe']
+
+    def get_success_url(self):
+        return reverse(
+            'RecipeAndProduct:recipt-ditails',
+            kwargs= {'pk': self.object.pk}
+
+        )
+
+class DeleteRecipteView(DeleteView):
+    model =  Recipe
+    success_url = reverse_lazy('RecipeAndProduct:recipt-list')

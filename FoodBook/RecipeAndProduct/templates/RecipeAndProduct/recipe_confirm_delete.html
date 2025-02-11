@@ -1,0 +1,21 @@
+{% extends 'RecipeAndProduct/base_R&P.html'%}
+
+{% block title%}
+    <title>Создание рецепта</title>
+{% endblock%}
+
+{% block body %}
+
+
+    <div>
+        Вы уверены что хотите удалить рецепт ?
+    </div>
+    <form  method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">Удалить!</button>
+    </form>
+    <div>
+        <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}">Вернуться к  рецепту</a>
+    </div>
+{% endblock%}

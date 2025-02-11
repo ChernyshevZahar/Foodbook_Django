@@ -7,7 +7,9 @@
 {% block body %}
     {% if recept %}
         <div>
-            <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+            {% if recept.image_dish %}
+                  <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+            {% endif%}
             <h1>Рецепт: {{recept.name}}</h1>
             <h2>Описание: {{recept.discription}}</h2>
             <p>Время приготовления: {{recept.cooking_time}}</p>
@@ -22,6 +24,10 @@
               {{recept.cooking_steps}}
             </p>
 
+        </div>
+        <div>
+          <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk%}">Изменить рецепт</a>
+          <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk%}">Удалить рецепт</a>
         </div>
 
 

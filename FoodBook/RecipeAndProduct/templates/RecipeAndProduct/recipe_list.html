@@ -14,7 +14,9 @@
         
             {% for recept in listrecipte %}
                 <div>
-                    <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+                    {% if recept.image_dish %}
+                        <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
+                    {% endif%}
                     <div>
                         <h1>{{recept.name}}</h1>
                         <p>Время приготовления: {{recept.cooking_time}} минут</p>
@@ -38,7 +40,7 @@
         
             <h2>Рецепты ещё не добавлены</h2>
             <div>
-              <a href="{% url 'RecipeAndProduct:recipt-add' pk=recept.pk%}">Добавить новый рецепт</a>
+              <a href="{% url 'RecipeAndProduct:recipt-add'%}">Добавить новый рецепт</a>
             </div>
         {%endif%}
     </section>
