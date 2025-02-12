@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import ListView , DetailView , CreateView,UpdateView,DeleteView
 
 from django.urls import reverse_lazy,reverse
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 from .models import Recipe
 from .forms import AddingRecipeForm
@@ -13,6 +15,10 @@ class RecipeListView(ListView):
         .all()
     )
     context_object_name = 'listrecipte'
+
+    @method_decorator(cache_page(60 * 3))  # Cache for 1 hour
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
 class RecipeDitailsView(DetailView):
