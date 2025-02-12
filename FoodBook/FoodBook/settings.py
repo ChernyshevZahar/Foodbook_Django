@@ -26,8 +26,21 @@ SECRET_KEY = 'django-insecure-w+hix8vtmviv(+i-w$rhuwz-iuta7@^&z*&00otx+b)i!a$v%s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+if DEBUG:
+    import socket
+    hostname, _ , ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS.append('10.0.2.2')
+    INTERNAL_IPS.extend(
+        [ip[: ip.rfind('.')]+ '.1' for ip in ips ]
+    )
 
 # Application definition
 
@@ -39,8 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
+
     'RecipeAndProduct.apps.RecipeandproductConfig',
     'accounts.apps.AccountsConfig',
+
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'accounts.middlewares.CountRequestMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'FoodBook.urls'
