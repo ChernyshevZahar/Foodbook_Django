@@ -9,26 +9,35 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from os import getenv
 from pathlib import Path
 from django.urls import reverse_lazy
 
+import logging.config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_DIR = BASE_DIR / 'database'
+DATABASE_DIR.mkdir(exist_ok=True)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w+hix8vtmviv(+i-w$rhuwz-iuta7@^&z*&00otx+b)i!a$v%s'
-
+SECRET_KEY = getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-+zsz7relks48ff^gu1zpxuhz1-)8@ncua-gzl8hq2=6+@d1r+@'
+)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv('DJANGO_DEBUG', '0') == '0'
 
 ALLOWED_HOSTS = [
+    "0.0.0.0",
     "127.0.0.1",
-]
+    "localhost",
+] + getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
+
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -99,7 +108,7 @@ WSGI_APPLICATION = 'FoodBook.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -156,3 +165,31 @@ CACHES = {
         "LOCATION" : "/var/tmp/django_cache"
     }
 }
+
+LOGLEVEL = getenv('DJANGO_LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': LOGLEVEL,
+            'handlers': [
+                'console',
+            ],
+        },
+    },
+})
+
+
