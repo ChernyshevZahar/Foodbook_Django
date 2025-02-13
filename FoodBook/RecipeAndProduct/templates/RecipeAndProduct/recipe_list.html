@@ -12,7 +12,7 @@
     <section class="container">
     <div class="row">
         {% if listrecipte %}
-            {% cache 300 listproduct %}
+
             {% for recept in listrecipte %}
                 <div class="col-md-4 mb-4">  <!-- Responsive columns -->
                     <div class="card h-100">  <!-- Added h-100 for consistent height -->
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% endcache %}
+
         {% else %}
             <div class="col-12">  <!-- Full-width for empty state -->
                 <div class="alert alert-info" role="alert">  <!-- Use Bootstrap alert for better visual feedback -->

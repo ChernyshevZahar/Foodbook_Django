@@ -12,9 +12,11 @@ class RecipeListView(ListView):
     queryset = (
         Recipe.objects
         .prefetch_related('catigory_recipe',)
-        .all()
+        .all().order_by('?')[:5]
     )
     context_object_name = 'listrecipte'
+
+
 
 
 
