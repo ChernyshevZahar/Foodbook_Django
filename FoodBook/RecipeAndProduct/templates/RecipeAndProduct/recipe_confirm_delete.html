@@ -7,15 +7,28 @@
 {% block body %}
 
 
-    <div>
-        Вы уверены что хотите удалить рецепт ?
-    </div>
-    <form  method="post">
-        {%csrf_token%}
-        {{form.as_p}}
-        <button type="submit">Удалить!</button>
-    </form>
-    <div>
-        <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}">Вернуться к  рецепту</a>
+       <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Вы уверены, что хотите удалить рецепт?</h2>
+                <p class="card-text">Это действие нельзя отменить. Все данные рецепта будут удалены.</p>
+
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-danger">Удалить!</button>
+                </form>
+
+
+                <div class="mt-3">
+                    <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}" class="btn btn-secondary">
+                        Вернуться к рецепту
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock%}

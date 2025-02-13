@@ -10,7 +10,12 @@
         {{form.as_p}}
         <button type="submit">Обновить</button>
     </form>
-    <div>
-        <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}">Вернуться к  рецепту</a>
-    </div>
+
+    <div class="row mt-4">
+            <div class="col-12 text-center">  <!-- Centered button -->
+                <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=object.pk %}" class="btn btn-primary">Вернуться к рецепту</a>
+            </div>
+        </div>
+
+
 {% endblock%}

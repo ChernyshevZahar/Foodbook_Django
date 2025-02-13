@@ -9,42 +9,52 @@
 
 
 {% block body %}
-    <section>
+    <section class="container">
+    <div class="row">
         {% if listrecipte %}
-        
             {% for recept in listrecipte %}
-                <div>
-                    {% if recept.image_dish %}
-                        <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
-                    {% endif%}
-                    <div>
-                        <h1>{{recept.name}}</h1>
-                        <p>Время приготовления: {{recept.cooking_time}} минут</p>
-                         <h3>Категории:</h3>
-                        {%for cat in recept.catigory_recipe.all%}
-
-                            <p>{{ cat.name }}</p>
-                        {%endfor%}
-                        <p>Создатель: {{recept.user}} </p>
+                <div class="col-md-4 mb-4">  <!-- Responsive columns -->
+                    <div class="card h-100">  <!-- Added h-100 for consistent height -->
+                        {% if recept.image_dish %}
+                            <img src="{{ recept.image_dish.url }}" class="card-img-top img-fluid" alt="{{ recept.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h3 class="card-title">{{ recept.name }}</h3>  <!-- Reduced heading size -->
+                            <p class="card-text">Время приготовления: {{ recept.cooking_time }} минут</p>
+                            <p class="card-text">
+                                <h5>Категории:</h5>
+                                <ul class="list-unstyled">  <!-- Use unordered list for categories -->
+                                    {% for cat in recept.catigory_recipe.all %}
+                                        <li>{{ cat.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </p>
+                            <p class="card-text"><small class="text-muted">Создатель: {{ recept.user }}</small></p>
+                            <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=recept.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
                     </div>
-
-                    <a href="{% url 'RecipeAndProduct:recipt-ditails' pk=recept.pk%}">Подробнее</a>
-                    
                 </div>
-
             {% endfor %}
-             <div>
-                  <a href="{% url 'RecipeAndProduct:recipt-add'%}">Добавить новый рецепт</a>
-             </div>
-        
-        {%else%}
-        
-            <h2>Рецепты ещё не добавлены</h2>
-            <div>
-              <a href="{% url 'RecipeAndProduct:recipt-add'%}">Добавить новый рецепт</a>
+        {% else %}
+            <div class="col-12">  <!-- Full-width for empty state -->
+                <div class="alert alert-info" role="alert">  <!-- Use Bootstrap alert for better visual feedback -->
+                    <h2>Рецепты ещё не добавлены</h2>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'RecipeAndProduct:recipt-add' %}" class="btn btn-primary">Добавить новый рецепт</a>
+                    {% endif %}
+                </div>
             </div>
-        {%endif%}
-    </section>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated and listrecipte %}  <!-- Add button only when recipes exist and the user is logged in -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">  <!-- Centered button -->
+                <a href="{% url 'RecipeAndProduct:recipt-add' %}" class="btn btn-primary">Добавить новый рецепт</a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+
     
 
 {% endblock %}

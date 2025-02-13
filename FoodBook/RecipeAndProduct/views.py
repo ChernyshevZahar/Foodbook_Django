@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
 from .models import Recipe
-from .forms import AddingRecipeForm
+from .forms import AddingRecipeForm , RecipeUpdateForm
 class RecipeListView(ListView):
     template_name = "RecipeAndProduct/recipe_list.html"
     queryset = (
@@ -16,7 +16,7 @@ class RecipeListView(ListView):
     )
     context_object_name = 'listrecipte'
 
-    @method_decorator(cache_page(60 * 3))  # Cache for 1 hour
+    @method_decorator(cache_page(60*3))  # Cache for 1 hour
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -44,13 +44,12 @@ class CreateRecipteView(CreateView):
 class UpdateRecipteView(UpdateView):
     template_name = "RecipeAndProduct/recipe-update.html"
     model = Recipe
-    fields = ['discription','image_dish','catigory_recipe']
+    form_class = RecipeUpdateForm  # Используем кастомную форму
 
     def get_success_url(self):
         return reverse(
             'RecipeAndProduct:recipt-ditails',
-            kwargs= {'pk': self.object.pk}
-
+            kwargs={'pk': self.object.pk}
         )
 
 class DeleteRecipteView(DeleteView):

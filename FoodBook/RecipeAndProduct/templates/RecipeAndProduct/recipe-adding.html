@@ -10,7 +10,10 @@
         {{form.as_p}}
         <button type="submit">Создать</button>
     </form>
-    <div>
-        <a href="{% url 'RecipeAndProduct:recipt-list' %}">Вернуться к списку рецептов</a>
+    <div class="row mt-4">
+        <div class="col-12 text-center">  <!-- Centered button -->
+            <a href="{% url 'RecipeAndProduct:recipt-list' %}" class="btn btn-primary">Вернуться к списку рецептов</a>
+        </div>
     </div>
+
 {% endblock%}

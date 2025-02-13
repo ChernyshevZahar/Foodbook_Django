@@ -14,7 +14,7 @@ class CountRequestMiddleware:
         self.allowed_url_names = ["login_app", "register"]
 
     def __call__(self, request: HttpRequest):
-        time_delay = 10
+        time_delay = 5
 
         try:
             resolved_url = resolve(request.path_info)  # Resolve the URL

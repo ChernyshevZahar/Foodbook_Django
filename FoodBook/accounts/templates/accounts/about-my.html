@@ -5,20 +5,51 @@
 {% endblock %}
 
 {%block body%}
-    <h1>Данные:</h1>
-     {% if user.is_authenticated %}
-        {%cache 10 userProfile %}
-            {% if  user.profile.avatar %}
-                <img src="{{user.profile.avatar.url}}" alt="{{user.username}}">
-            {%endif%}
-            <p>UserName: {{user.username}}</p>
-            <p>first_name: {{user.first_name}}</p>
-            <p>first_name: {{user.last_name}}</p>
-            <p>email: {{user.email}}</p>
-            <p>Bio: {{user.profile.bio}}</p>
-        {%endcache%}
-            <a href="{%url 'accounts:about_me_update'%}">Обновить профиль</a>
+    <div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      {% if user.is_authenticated %}
+        <div class="card mb-4">
+          <div class="card-header">
+            <h2>Профиль</h2>
+          </div>
+          <div class="card-body">
+            <div class="text-center mb-4">
+              {% cache 300 userProfile %}
+                {% if user.profile.avatar %}
+                  <img src="{{ user.profile.avatar.url }}" class="img-fluid rounded-circle" style="max-width: 200px;" alt="{{ user.username }}">
+                {% else %}
+                  <i class="bi bi-person-circle" style="font-size: 100px;"></i>
+                {% endif %}
+              {% endcache %}
+            </div>
+            <dl class="row">
+                <dt class="col-sm-3">Имя пользователя:</dt>
+                <dd class="col-sm-9">{{ user.username }}</dd>
 
+                <dt class="col-sm-3">Имя:</dt>
+                <dd class="col-sm-9">{{ user.first_name }}</dd>
 
-    {%endif%}
+                <dt class="col-sm-3">Фамилия:</dt>
+                <dd class="col-sm-9">{{ user.last_name }}</dd>
+
+                <dt class="col-sm-3">Email:</dt>
+                <dd class="col-sm-9">{{ user.email }}</dd>
+
+                <dt class="col-sm-3">О себе:</dt>
+                <dd class="col-sm-9">{{ user.profile.bio }}</dd>
+            </dl>
+            <a href="{% url 'accounts:about_me_update' %}" class="btn btn-primary mt-3">Обновить профиль</a>
+          </div>
+        </div>
+      {% else %}
+        <div class="alert alert-info mt-4" role="alert">
+          <p>Пожалуйста, авторизируйтесь, чтобы просмотреть свой профиль.</p>
+          <a href="{% url 'accounts:login_app' %}" class="btn btn-primary">Авторизация</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}

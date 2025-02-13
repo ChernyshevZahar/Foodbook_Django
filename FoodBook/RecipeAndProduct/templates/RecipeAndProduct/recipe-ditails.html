@@ -6,29 +6,32 @@
 
 {% block body %}
     {% if recept %}
-        <div>
+         <div class="container mt-5">
+        <div class="card">
             {% if recept.image_dish %}
-                  <img src="{{ recept.image_dish.url }}" alt="{{recept.name}}">
-            {% endif%}
-            <h1>Рецепт: {{recept.name}}</h1>
-            <h2>Описание: {{recept.discription}}</h2>
-            <p>Время приготовления: {{recept.cooking_time}}</p>
-            <div>
-              <h3>Необходимые продукты</h3>
-                {% for prod in recept.products.all %}
-                  <p>{{prod.name}}</p>
-                {%endfor%}
+                <img src="{{ recept.image_dish.url }}" class="card-img-top" alt="{{ recept.name }}">
+            {% endif %}
+            <div class="card-body">
+                <h1 class="card-title">Рецепт: {{ recept.name }}</h1>
+                <h2 class="card-subtitle mb-2 text-muted">Описание: {{ recept.discription }}</h2>
+                <p class="card-text">Время приготовления: {{ recept.cooking_time }}</p>
+                <div class="mb-3">
+                    <h3>Необходимые продукты</h3>
+                    <ul class="list-group">
+                        {% for prod in recept.products.all %}
+                            <li class="list-group-item">{{ prod.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <h2 class="mb-3">Способ приготовления</h2>
+                <p class="card-text">{{ recept.cooking_steps }}</p>
             </div>
-            <h2>Способ приготовления</h2>
-            <p>
-              {{recept.cooking_steps}}
-            </p>
-
+            <div class="card-footer">
+                <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk %}" class="btn btn-primary">Изменить рецепт</a>
+                <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk %}" class="btn btn-danger">Удалить рецепт</a>
+            </div>
         </div>
-        <div>
-          <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk%}">Изменить рецепт</a>
-          <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk%}">Удалить рецепт</a>
-        </div>
+    </div>
 
 
     {%endif%}
