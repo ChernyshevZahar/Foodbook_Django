@@ -16,7 +16,16 @@ class RecipeListView(ListView):
     )
     context_object_name = 'listrecipte'
 
+class UserRecipeListView(UserPassesTestMixin,LoginRequiredMixin, ListView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='Make_use_recipt').exists() or self.request.user.is_superuser
+    template_name = "RecipeAndProduct/my_recipe_list.html"
+    context_object_name = 'user_recipes'
+    model = Recipe
 
+    def get_queryset(self):
+        # Фильтруем рецепты по текущему пользователю
+        return Recipe.objects.filter(user=self.request.user)
 
 
 

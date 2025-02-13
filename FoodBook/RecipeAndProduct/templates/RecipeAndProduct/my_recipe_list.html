@@ -1,9 +1,9 @@
 {%extends 'RecipeAndProduct/base_R&P.html'%}
-
+{% load cache %}
 
 {% block title%}
     <title>
-        Список рецептов
+        Список моих рецептов
     </title>
 {% endblock %}
 
@@ -11,9 +11,9 @@
 {% block body %}
     <section class="container">
     <div class="row">
-        {% if listrecipte %}
-
-            {% for recept in listrecipte %}
+        {% if user_recipes %}
+            {%cache 300 myrecipe %}
+            {% for recept in user_recipes %}
                 <div class="col-md-4 mb-4">  <!-- Responsive columns -->
                     <div class="card h-100">  <!-- Added h-100 for consistent height -->
                         {% if recept.image_dish %}
@@ -36,20 +36,20 @@
                     </div>
                 </div>
             {% endfor %}
-
+            {%endcache%}
         {% else %}
             <div class="col-12">  <!-- Full-width for empty state -->
                 <div class="alert alert-info" role="alert">  <!-- Use Bootstrap alert for better visual feedback -->
                     <h2>Рецепты ещё не добавлены</h2>
                      {% if user.is_authenticated  %}
                           {% if perms.ricipe.change_product  %}
-                                    {% if user == ricipe.user or user.is_superuser %}
+
                                     <div class="row mt-4">
                                         <div class="col-12 text-center">  <!-- Centered button -->
                                             <a href="{% url 'RecipeAndProduct:recipt-add' %}" class="btn btn-primary">Добавить новый рецепт</a>
                                         </div>
                                     </div>
-                                     {% endif %}
+
                          {% endif %}
                     {% endif %}
                 </div>
@@ -58,13 +58,13 @@
     </div>
     {% if user.is_authenticated  %}
           {% if perms.ricipe.change_product  %}
-                    {% if user == ricipe.user or user.is_superuser %}
+
                     <div class="row mt-4">
                         <div class="col-12 text-center">  <!-- Centered button -->
                             <a href="{% url 'RecipeAndProduct:recipt-add' %}" class="btn btn-primary">Добавить новый рецепт</a>
                         </div>
                     </div>
-                     {% endif %}
+
          {% endif %}
     {% endif %}
 
