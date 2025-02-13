@@ -30,7 +30,9 @@ class RecipeDitailsView( DetailView):
 
 
 
-class CreateRecipteView(LoginRequiredMixin,CreateView):
+class CreateRecipteView(UserPassesTestMixin ,LoginRequiredMixin,CreateView):
+    def test_func(self):
+        return self.request.user.groups.filter(name='Make_use_recipt').exists() or self.request.user.is_superuser
     template_name = "RecipeAndProduct/recipe-adding.html"
     form_class = AddingRecipeForm
     success_url = reverse_lazy('RecipeAndProduct:recipt-list')
@@ -41,7 +43,10 @@ class CreateRecipteView(LoginRequiredMixin,CreateView):
         recipte.save()
         return super().form_valid(form)
 
-class UpdateRecipteView(LoginRequiredMixin,UpdateView):
+class UpdateRecipteView(UserPassesTestMixin ,LoginRequiredMixin,UpdateView):
+    def test_func(self):
+        obj = self.get_object()
+        return (self.request.user.groups.filter(name='Make_use_recipt').exists() and (obj.created_by == self.request.user)  or self.request.user.is_superuser)
     template_name = "RecipeAndProduct/recipe-update.html"
     model = Recipe
     form_class = RecipeUpdateForm  # Используем кастомную форму
@@ -52,6 +57,9 @@ class UpdateRecipteView(LoginRequiredMixin,UpdateView):
             kwargs={'pk': self.object.pk}
         )
 
-class DeleteRecipteView(LoginRequiredMixin,DeleteView):
+class DeleteRecipteView(UserPassesTestMixin ,LoginRequiredMixin,DeleteView):
+    def test_func(self):
+        obj = self.get_object()
+        return (self.request.user.groups.filter(name='Make_use_recipt').exists() and (obj.created_by == self.request.user)  or self.request.user.is_superuser)
     model =  Recipe
     success_url = reverse_lazy('RecipeAndProduct:recipt-list')

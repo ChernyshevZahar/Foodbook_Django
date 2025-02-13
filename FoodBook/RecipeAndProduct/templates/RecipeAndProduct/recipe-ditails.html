@@ -26,11 +26,15 @@
                 <h2 class="mb-3">Способ приготовления</h2>
                 <p class="card-text">{{ recept.cooking_steps }}</p>
             </div>
-            {% if user.is_authenticated%}
-            <div class="card-footer">
-                <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk %}" class="btn btn-primary">Изменить рецепт</a>
-                <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk %}" class="btn btn-danger">Удалить рецепт</a>
-            </div>
+            {% if user.is_authenticated  %}
+                {% if perms.ricipe.change_product  %}
+                    {% if user == ricipe.user or user.is_superuser %}
+                        <div class="card-footer">
+                            <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk %}" class="btn btn-primary">Изменить рецепт</a>
+                            <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk %}" class="btn btn-danger">Удалить рецепт</a>
+                        </div>
+                    {%endif%}
+              {%endif%}
             {%endif%}
             <div class="row mt-4">
                 <div class="col-12 text-center">  <!-- Centered button -->
