@@ -46,13 +46,14 @@
             </div>
         {% endif %}
     </div>
-    {% if user.is_authenticated and listrecipte %}  <!-- Add button only when recipes exist and the user is logged in -->
+    {% if user.is_authenticated  %}  <!-- Add button only when recipes exist and the user is logged in -->
         <div class="row mt-4">
             <div class="col-12 text-center">  <!-- Centered button -->
                 <a href="{% url 'RecipeAndProduct:recipt-add' %}" class="btn btn-primary">Добавить новый рецепт</a>
             </div>
         </div>
     {% endif %}
+
 </section>
 
     

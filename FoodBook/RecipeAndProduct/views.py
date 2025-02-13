@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView , DetailView , CreateView,UpdateView,DeleteView
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy,reverse
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
@@ -16,12 +16,12 @@ class RecipeListView(ListView):
     )
     context_object_name = 'listrecipte'
 
-    @method_decorator(cache_page(60*3))  # Cache for 1 hour
+    @method_decorator(cache_page(60 * 3))  # Cache for 1 hour
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
 
-class RecipeDitailsView(DetailView):
+class RecipeDitailsView( DetailView):
     template_name = "RecipeAndProduct/recipe-ditails.html"
     queryset = (
         Recipe.objects
@@ -30,7 +30,9 @@ class RecipeDitailsView(DetailView):
     )
     context_object_name = 'recept'
 
-class CreateRecipteView(CreateView):
+
+
+class CreateRecipteView(LoginRequiredMixin,CreateView):
     template_name = "RecipeAndProduct/recipe-adding.html"
     form_class = AddingRecipeForm
     success_url = reverse_lazy('RecipeAndProduct:recipt-list')
@@ -41,7 +43,7 @@ class CreateRecipteView(CreateView):
         recipte.save()
         return super().form_valid(form)
 
-class UpdateRecipteView(UpdateView):
+class UpdateRecipteView(LoginRequiredMixin,UpdateView):
     template_name = "RecipeAndProduct/recipe-update.html"
     model = Recipe
     form_class = RecipeUpdateForm  # Используем кастомную форму
@@ -52,6 +54,6 @@ class UpdateRecipteView(UpdateView):
             kwargs={'pk': self.object.pk}
         )
 
-class DeleteRecipteView(DeleteView):
+class DeleteRecipteView(LoginRequiredMixin,DeleteView):
     model =  Recipe
     success_url = reverse_lazy('RecipeAndProduct:recipt-list')

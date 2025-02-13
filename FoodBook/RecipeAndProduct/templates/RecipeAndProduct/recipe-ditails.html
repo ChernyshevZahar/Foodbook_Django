@@ -26,9 +26,16 @@
                 <h2 class="mb-3">Способ приготовления</h2>
                 <p class="card-text">{{ recept.cooking_steps }}</p>
             </div>
+            {% if user.is_authenticated%}
             <div class="card-footer">
                 <a href="{% url 'RecipeAndProduct:recipt-update' pk=recept.pk %}" class="btn btn-primary">Изменить рецепт</a>
                 <a href="{% url 'RecipeAndProduct:recipt-delete' pk=recept.pk %}" class="btn btn-danger">Удалить рецепт</a>
+            </div>
+            {%endif%}
+            <div class="row mt-4">
+                <div class="col-12 text-center">  <!-- Centered button -->
+                    <a href="{% url 'RecipeAndProduct:recipt-list' %}" class="btn btn-primary">Вернуться к списку рецептов</a>
+                </div>
             </div>
         </div>
     </div>
