@@ -16,9 +16,7 @@ class RecipeListView(ListView):
     )
     context_object_name = 'listrecipte'
 
-    @method_decorator(cache_page(60 * 3))  # Cache for 1 hour
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+
 
 
 class RecipeDitailsView( DetailView):
