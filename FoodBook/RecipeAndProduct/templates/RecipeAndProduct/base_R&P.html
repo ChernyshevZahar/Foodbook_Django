@@ -18,7 +18,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'RecipeAndProduct:recipt-list' %}">Главная</a>
                     </li>
-                    {% if perms.recipe.change_recipe  %}
+                    {% if perms.RecipeAndProduct.change_recipe or user.is_superuser %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'RecipeAndProduct:my-recipt-list' %}">Мои рецепты</a>
                         </li>
