@@ -52,11 +52,15 @@ class AddingRecipeForm(forms.ModelForm):
 class RecipeUpdateForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ['discription', 'image_dish', 'catigory_recipe']
+        fields = ['name', 'discription', 'cooking_steps', 'cooking_time', 'image_dish', 'catigory_recipe', 'products']  # Include all relevant fields
         widgets = {
-            'discription': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'image_dish': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-            'catigory_recipe': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название блюда'}),
+            'discription': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Описание'}),
+            'cooking_steps': forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'Шаги приготовления'}),
+            'cooking_time': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Время приготовления (минуты)'}),
+            'image_dish': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'catigory_recipe': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'products': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
 

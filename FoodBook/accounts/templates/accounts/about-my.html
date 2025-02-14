@@ -15,15 +15,16 @@
           </div>
           <div class="card-body">
             <div class="text-center mb-4">
-              {% cache 300 userProfile %}
+
                 {% if user.profile.avatar %}
                   <img src="{{ user.profile.avatar.url }}" class="img-fluid rounded-circle" style="max-width: 200px;" alt="{{ user.username }}">
                 {% else %}
                   <i class="bi bi-person-circle" style="font-size: 100px;"></i>
                 {% endif %}
-              {% endcache %}
+
             </div>
             <dl class="row">
+
                 <dt class="col-sm-3">Имя пользователя:</dt>
                 <dd class="col-sm-9">{{ user.username }}</dd>
 

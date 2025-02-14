@@ -10,13 +10,23 @@ class UserAndProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['first_name'].label = 'Имя'
-        self.fields['last_name'].label = 'Фамилия'
-        self.fields['email'].label = 'Электронная почта'
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs['class'] = 'form-control'
+            if self.fields[field_name].label == "Электронная почта":
+              self.fields[field_name].widget.attrs['type'] = 'email'
 
-        if self.instance.pk:
-            self.fields['bio'] = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), label='О себе', required=False, max_length=500)
-            self.fields['argumet_acsepted'] = forms.BooleanField(label='Соглашение', required=False)
-            self.fields['avatar'] = forms.ImageField(label='Аватар', required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+        if self.instance and self.instance.pk:
+            self.fields['bio'] = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+                                                 label='О себе', required=False, initial=self.instance.profile.bio,
+                                                 max_length=500)
+            self.fields['argumet_acsepted'] = forms.BooleanField(label='Соглашение', required=False,
+                                                                 initial=self.instance.profile.argumet_acsepted)
+            if self.instance.profile.avatar:
+                self.fields['avatar'] = forms.ImageField(label='Аватар', required=False,
+                                                         initial=self.instance.profile.avatar.url,
+                                                         widget=forms.ClearableFileInput(
+                                                             attrs={'class': 'form-control-file'}))
+            else:
+                self.fields['avatar'] = forms.ImageField(label='Аватар', required=False,
+                                                         widget=forms.ClearableFileInput(
+                                                             attrs={'class': 'form-control-file'}))
